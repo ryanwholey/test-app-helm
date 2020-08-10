@@ -20,12 +20,12 @@ jobs:
           command: |
             echo $CIRCLE_TAG
             GH_TOKEN=foo
-            echo curl --data $(printf '{"tag_name": "v%s","target_commitish": "master","name": "v%s","body": "Chart version %s","draft": false,"prerelease": false}' $CIRCLE_TAG) https://api.github.com/repos/ryanwholey/$CIRCLE_PROJECT_REPONAME/releases?access_token=$GH_TOKEN
+            echo curl --data $(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Chart version %s","draft": false,"prerelease": false}' $CIRCLE_TAG) https://api.github.com/repos/ryanwholey/$CIRCLE_PROJECT_REPONAME/releases?access_token=$GH_TOKEN
 workflows:
   version: 2
   default:
     jobs:
       - build_and_release:
           filters:
-            branches:
-              only: master
+            tags:
+              only: /^v.*/
