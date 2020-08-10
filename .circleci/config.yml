@@ -2,13 +2,15 @@ version: 2.1
 jobs:
   build_and_release:
     docker:
-      - image: circleci/helm:latest
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Helm Version
-          command: helm version
+          name: Install helm 
+          command: |
+            HELM_VERSION=3.2.4
+            curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-linux-386.tar.gz" | sudo tar xvz --strip-components=1 -C /usr/local/bin linux-386/helm
 workflows:
   version: 2
   default:
