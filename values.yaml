@@ -1,6 +1,6 @@
 image:
   repository: ryanwholey/test-app
-  tag: dfb6787e4e622efaa9f1b3ba725353fd85605661
+  tag: latest
   pullPolicy: IfNotPresent
 
 server:
