@@ -16,6 +16,11 @@ jobs:
       - run: 
           name: Package chart
           command: cd $CIRCLE_PROJECT_REPONAME && helm package .
+      run:
+        command: |
+          echo $CIRCLE_TAG
+          GH_TOKEN=foo
+          echo curl --data $(printf '{"tag_name": "v%s","target_commitish": "master","name": "v%s","body": "Chart version %s","draft": false,"prerelease": false}' $CIRCLE_TAG) https://api.github.com/repos/ryanwholey/$CIRCLE_PROJECT_REPONAME/releases?access_token=$GH_TOKEN
 workflows:
   version: 2
   default:
