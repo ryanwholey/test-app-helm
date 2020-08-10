@@ -15,7 +15,7 @@ jobs:
             curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-linux-386.tar.gz" | sudo tar xvz --strip-components=1 -C /usr/local/bin linux-386/helm
       - run: 
           name: Package chart
-          command: helm package .
+          command: cd $CIRCLE_PROJECT_REPONAME && helm package .
 workflows:
   version: 2
   default:
