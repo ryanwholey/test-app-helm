@@ -1,5 +1,10 @@
 version: 2.1
 jobs:
+  foo:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - run: echo foo
   build_and_release:
     docker:
       - image: circleci/buildpack-deps:stretch
@@ -23,9 +28,12 @@ jobs:
             echo curl --data $(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Chart version %s","draft": false,"prerelease": false}' $CIRCLE_TAG) https://api.github.com/repos/ryanwholey/$CIRCLE_PROJECT_REPONAME/releases?access_token=$GH_TOKEN
 workflows:
   version: 2
-  default:
+  untagged-build:
+    jobs:
+      - foo
+  tagged-build:
     jobs:
       - build_and_release:
           filters:
             tags:
-              only: /.*/
+              only: /^v.*/
