@@ -6,11 +6,16 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - working_directory: $CIRCLE_PROJECT_REPONAME
+      - run: pwd
       - run:
-          name: Install helm 
+          name: Install Helm 
           command: |
             HELM_VERSION=3.2.4
             curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-linux-386.tar.gz" | sudo tar xvz --strip-components=1 -C /usr/local/bin linux-386/helm
+      - run: 
+          name: Package chart
+          command: helm package .
 workflows:
   version: 2
   default:
