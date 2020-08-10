@@ -4,9 +4,9 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
-      - checkout
+      - checkout:
+          path: $CIRCLE_PROJECT_REPONAME
       - setup_remote_docker
-      - working_directory: $CIRCLE_PROJECT_REPONAME
       - run: pwd
       - run:
           name: Install Helm 
