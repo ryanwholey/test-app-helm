@@ -28,4 +28,4 @@ workflows:
       - build_and_release:
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
