@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  build_and_release:
+    docker:
+      - image: circleci/helm:latest
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Helm Version
+          command: helm version
+workflows:
+  version: 2
+  default:
+    jobs:
+      - build_and_release:
+          filters:
+            branches:
+              only: master
