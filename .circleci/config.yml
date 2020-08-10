@@ -5,37 +5,8 @@ jobs:
       - image: circleci/buildpack-deps:stretch
     steps:
       - run: echo foo
-  build_and_release:
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    steps:
-      - checkout:
-          path: $CIRCLE_PROJECT_REPONAME
-      - setup_remote_docker
-      - run:
-          name: Install Helm 
-          command: |
-            HELM_VERSION=3.2.4
-            curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-linux-386.tar.gz" | sudo tar xvz --strip-components=1 -C /usr/local/bin linux-386/helm
-      - run: 
-          name: Package chart
-          command: cd $CIRCLE_PROJECT_REPONAME && helm package .
-      - run:
-          name: Release to GitHub
-          command: |
-            echo $CIRCLE_TAG
-            GH_TOKEN=foo
-            echo curl --data $(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Chart version %s","draft": false,"prerelease": false}' $CIRCLE_TAG) https://api.github.com/repos/ryanwholey/$CIRCLE_PROJECT_REPONAME/releases?access_token=$GH_TOKEN
 workflows:
   version: 2
   untagged-build:
     jobs:
       - foo
-  tagged-build:
-    jobs:
-      - build_and_release:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
