@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  foo:
+  publish:
     docker:
       - image: cimg/python:3.6
     working_directory: ~/test-app-helm
@@ -14,18 +14,20 @@ jobs:
           command: curl -fsSL https://get.helm.sh/helm-v3.2.4-linux-386.tar.gz | sudo tar xz --strip-components=1 -C /usr/local/bin linux-386/helm
       - run:
           name: Export version
-          command: echo "export CHART_VERSION=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
+          command: |
+            echo "export CHART_VERSION=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
+            echo "export CHART_NAME=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
       - run:
           name: Package helm chart
           command: helm package .
       - run:
           command: ls
-
-      # - aws-s3/sync:
-      #     from: bucket
-      #     to: 's3://my-s3-bucket-name/prefix'
+      - aws-s3/copy:
+          from: ./${CHART_NAME}-${CHART_VERSION}.tgz
+          to: 's3://wholey-helm-charts'
 workflows:
   version: 2
   untagged-build:
     jobs:
-      - foo
+      - publish:
+          context: publish
