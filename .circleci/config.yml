@@ -3,7 +3,7 @@ jobs:
   foo:
     docker:
       - image: cimg/python:3.6
-    working_directory: test-app-helm
+    working_directory: ~/test-app-helm
     steps:
       - checkout
       - run: 
