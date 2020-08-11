@@ -15,3 +15,6 @@ server:
 service:
   annotations: {}
   type: ClusterIP
+
+ingress:
+  tld: ryanwholey.com

@@ -10,10 +10,13 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: app.ryanwholey.com
+  - host: {{ .Chart.Name }}.{{ .Values.ingress.tld }}
     http:
       paths:
       - path: /
         backend:
           serviceName: {{ template "fullname" . }}
           servicePort: {{ .Values.server.port }}
+  tls:
+  - hosts:
+    - {{ .Chart.Name }}.{{ .Values.ingress.tld }}
