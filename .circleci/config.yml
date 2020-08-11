@@ -2,9 +2,27 @@ version: 2.1
 jobs:
   foo:
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: cimg/python:3.6
     steps:
-      - run: echo foo
+      - checkout
+      - working_directory: test-app-helm
+      - run: 
+          name: Install yq
+          command: pip install yq
+      - run:
+          name: Install helm
+          command: curl -fsSL https://get.helm.sh/helm-v3.2.4-linux-386.tar.gz | sudo tar xz --strip-components=1 -C /usr/local/bin linux-386/helm
+      - run:
+          name: Export version
+          command: echo "export CHART_VERSION=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
+      - run:
+          command: |
+            echo $CHART_VERSION
+            pwd
+            helm version
+      # - aws-s3/sync:
+      #     from: bucket
+      #     to: 's3://my-s3-bucket-name/prefix'
 workflows:
   version: 2
   untagged-build:
