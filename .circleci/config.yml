@@ -3,9 +3,9 @@ jobs:
   foo:
     docker:
       - image: cimg/python:3.6
+    working_directory: test-app-helm
     steps:
       - checkout
-        path: test-app-helm
       - run: 
           name: Install yq
           command: pip install yq
