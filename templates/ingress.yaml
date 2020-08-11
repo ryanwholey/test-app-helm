@@ -10,7 +10,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: {{ .Chart.Name }}.{{ .Values.ingress.tld }}
+  - host: {{ .Values.ingress.name }}.{{ .Values.ingress.tld }}
     http:
       paths:
       - path: /
@@ -19,4 +19,4 @@ spec:
           servicePort: {{ .Values.server.port }}
   tls:
   - hosts:
-    - {{ .Chart.Name }}.{{ .Values.ingress.tld }}
+    - {{ .Values.ingress.name }}.{{ .Values.ingress.tld }}

@@ -18,3 +18,4 @@ service:
 
 ingress:
   tld: ryanwholey.com
+  name: app
