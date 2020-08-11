@@ -16,10 +16,11 @@ jobs:
           name: Export version
           command: echo "export CHART_VERSION=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
       - run:
-          command: |
-            echo $CHART_VERSION
-            pwd
-            helm version
+          name: Package helm chart
+          command: helm package .
+      - run:
+          command: ls
+
       # - aws-s3/sync:
       #     from: bucket
       #     to: 's3://my-s3-bucket-name/prefix'
