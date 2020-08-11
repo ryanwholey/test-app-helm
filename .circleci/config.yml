@@ -5,7 +5,7 @@ jobs:
       - image: cimg/python:3.6
     steps:
       - checkout
-      - working_directory: test-app-helm
+        path: test-app-helm
       - run: 
           name: Install yq
           command: pip install yq
