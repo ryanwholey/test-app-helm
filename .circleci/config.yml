@@ -18,7 +18,7 @@ jobs:
           name: Export version
           command: |
             echo "export CHART_VERSION=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
-            echo "export CHART_NAME=$(cat Chart.yaml | yq  -r '.version')" >> $BASH_ENV
+            echo "export CHART_NAME=$(cat Chart.yaml | yq  -r '.name')" >> $BASH_ENV
       - run:
           name: Package helm chart
           command: helm package .
