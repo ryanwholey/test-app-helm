@@ -15,9 +15,12 @@ spec:
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
-          serviceName: {{ template "fullname" . }}
-          servicePort: {{ .Values.server.port }}
+          service:
+            name: {{ template "fullname" . }}
+            port:
+              number: {{ .Values.server.port }}
   tls:
   - hosts:
     - {{ .Values.ingress.name }}.{{ .Values.ingress.tld }}
