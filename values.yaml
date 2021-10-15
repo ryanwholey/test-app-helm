@@ -1,6 +1,7 @@
 image:
-  repository: ryanwholey/test-app
+  repository: ryanwholey
   tag: latest
+  image: test-app
   pullPolicy: IfNotPresent
 
 server:
